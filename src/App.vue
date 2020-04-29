@@ -1,25 +1,12 @@
 <template>
   <div id="app">
-    <el-button type="primary" @click="open(1)">button1</el-button>
-    <el-button type="primary" @click="open(2)">button2</el-button>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import { Button } from 'element-ui';
-import AgreementDialog from './components/agreementDialog';
-
-Vue.use(Button);
-
 export default {
-  name: 'App',
-  components: {},
-  methods: {
-    open(id) {
-      AgreementDialog.show({ id });
-    }
-  }
+  name: 'App'
 };
 </script>
 
