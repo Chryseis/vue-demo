@@ -51,14 +51,7 @@
         ]"
       ></span>
     </div>
-    <transition
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @after-enter="afterEnter"
-      @before-leave="beforeLeave"
-      @leave="leave"
-      @afterLeave="afterLeave"
-    >
+    <el-collapse-transition>
       <div
         class="el-tree-node__children"
         v-if="!renderAfterExpand || childNodeRendered"
@@ -76,15 +69,15 @@
           @node-expand="handleChildNodeExpand"
         ></el-tree-node>
       </div>
-    </transition>
+    </el-collapse-transition>
   </div>
 </template>
 
 <script type="text/jsx">
+import ElCollapseTransition from './d-transition';
 import ElCheckbox from 'element-ui/packages/checkbox';
 import emitter from 'element-ui/src/mixins/emitter';
 import { getNodeKey } from './model/util';
-import {addClass, removeClass} from "element-ui/src/utils/dom";
 
 export default {
   name: 'ElTreeNode',
@@ -112,6 +105,7 @@ export default {
   },
 
   components: {
+    ElCollapseTransition,
     ElCheckbox,
     NodeContent: {
       props: {
@@ -121,12 +115,7 @@ export default {
       },
 
       watch:{
-        node:{
-          handler(val){
-            console.log(val,'123')
-          },
-          deep:true
-        }
+
       },
 
       render(h) {
@@ -135,12 +124,13 @@ export default {
         const node = this.node;
         const { data, store } = node;
 
-        return (
-          parent.renderContent
-            ? parent.renderContent.call(parent._renderProxy, h, { _self: tree.$vnode.context, node, data, store })
-            : tree.$scopedSlots.default
+        const allLeafs=store.getNodesInNode(true,false,node)
+
+        const checkedLeafs=store.getCheckedNodesInNode(true,false,node)
+
+        return (tree.$scopedSlots.default
               ? tree.$scopedSlots.default({ node, data })
-              : <span class={`el-tree-node__label ${node.level===1&&'d-label-top-level'}`}>{ node.label }</span>
+              : <span class={`el-tree-node__label ${node.level===1&&'d-label-top-level'}`}>{ node.label + (!node.isLeaf?`(${checkedLeafs.length}/${allLeafs.length})`:'')}</span>
         );
       }
     }
@@ -174,65 +164,6 @@ export default {
   },
 
   methods: {
-    /*
-    * 动画事件
-    * */
-    beforeEnter(el) {
-      addClass(el, 'collapse-transition');
-      if (!el.dataset) el.dataset = {};
-
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
-
-      el.style.height = '0';
-      el.style.paddingTop = 0;
-      el.style.paddingBottom = 0;
-    },
-    enter(el) {
-      el.dataset.oldOverflow = el.style.overflow;
-      if (el.scrollHeight !== 0) {
-        el.style.height = el.scrollHeight + 'px';
-        el.style.paddingTop = el.dataset.oldPaddingTop;
-        el.style.paddingBottom = el.dataset.oldPaddingBottom;
-      } else {
-        el.style.height = '';
-        el.style.paddingTop = el.dataset.oldPaddingTop;
-        el.style.paddingBottom = el.dataset.oldPaddingBottom;
-      }
-
-      el.style.overflow = 'hidden';
-    },
-    afterEnter(el) {
-      // for safari: remove class then reset height is necessary
-      removeClass(el, 'collapse-transition');
-      el.style.height = '';
-      el.style.overflow = el.dataset.oldOverflow;
-    },
-    beforeLeave(el) {
-      if (!el.dataset) el.dataset = {};
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
-      el.dataset.oldOverflow = el.style.overflow;
-
-      el.style.height = el.scrollHeight + 'px';
-      el.style.overflow = 'hidden';
-    },
-    leave(el) {
-      if (el.scrollHeight !== 0) {
-        // for safari: add class after set height, or it will jump to zero height suddenly, weired
-        addClass(el, 'collapse-transition');
-        el.style.height = 0;
-        el.style.paddingTop = 0;
-        el.style.paddingBottom = 0;
-      }
-    },
-    afterLeave(el) {
-      removeClass(el, 'collapse-transition');
-      el.style.height = '';
-      el.style.overflow = el.dataset.oldOverflow;
-      el.style.paddingTop = el.dataset.oldPaddingTop;
-      el.style.paddingBottom = el.dataset.oldPaddingBottom;
-    },
 
     getNodeKey(node) {
       return getNodeKey(this.tree.nodeKey, node.data);

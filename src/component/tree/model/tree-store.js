@@ -174,6 +174,47 @@ export default class TreeStore {
     return checkedNodes;
   }
 
+  getCheckedNodesInNode(leafOnly = false, includeHalfChecked = false, node) {
+    const checkedNodes = [];
+    const traverse = function(node) {
+      const childNodes = node.root ? node.root.childNodes : node.childNodes;
+
+      childNodes.forEach(child => {
+        if (
+          (child.checked || (includeHalfChecked && child.indeterminate)) &&
+          (!leafOnly || (leafOnly && child.isLeaf))
+        ) {
+          checkedNodes.push(child.data);
+        }
+
+        traverse(child);
+      });
+    };
+
+    traverse(node);
+
+    return checkedNodes;
+  }
+
+  getNodesInNode(leafOnly = false, includeHalfChecked = false, node) {
+    const checkedNodes = [];
+    const traverse = function(node) {
+      const childNodes = node.root ? node.root.childNodes : node.childNodes;
+
+      childNodes.forEach(child => {
+        if (!leafOnly || (leafOnly && child.isLeaf)) {
+          checkedNodes.push(child.data);
+        }
+
+        traverse(child);
+      });
+    };
+
+    traverse(node);
+
+    return checkedNodes;
+  }
+
   getCheckedKeys(leafOnly = false) {
     return this.getCheckedNodes(leafOnly).map(data => (data || {})[this.key]);
   }
