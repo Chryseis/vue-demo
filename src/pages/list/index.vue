@@ -39,12 +39,11 @@ import tree from '../../component/tree/tree'
 const mergeAreaData = (areaData, initData = []) => {
   return Object.keys(areaData).reduce((adapterAreaData, key) => {
     if (area[key]) {
-      const children=mergeAreaData(area[key])
       return adapterAreaData.concat({
         id: key,
         label: areaData[key],
-        total:children.length,
-        children
+        disabled:key==='110100',
+        children:mergeAreaData(area[key])
       });
     } else {
       return adapterAreaData.concat({ id: key, label: areaData[key] });
@@ -92,7 +91,6 @@ export default {
   },
   created() {
     console.log('created')
-    // console.log(this.menu);
   },
   mounted() {
     this.$refs.tree.setCheckedKeys(['110101']);

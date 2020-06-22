@@ -12,6 +12,17 @@ export default {
   methods: {},
   components: {
     formInfo
+  },
+  created() {
+    // window.addEventListener('popstate', function() {
+    //   history.pushState(null, null, document.URL);
+    // });
+  },
+  beforeRouteLeave(to, from, next) {
+    // next(false);
+    console.log('leave');
+    // next(from.path);
+    this.$confirm('hahaha', 'confirm').then(_ => next());
   }
 };
 </script>

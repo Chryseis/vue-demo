@@ -3,13 +3,19 @@
     <el-form-item
       label="年龄"
       prop="age"
-      :rules="[{ required: true, message: '年龄不能为空' }, { type: 'number', message: '年龄必须为数字值' }]"
+      :rules="[
+        { required: true, message: '年龄不能为空' },
+        { type: 'number', message: '年龄必须为数字值' }
+      ]"
     >
       <el-input type="age" v-model.number="numberValidateForm.age" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
       <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="goNext('/')">返回主页</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -36,6 +42,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    goNext(path) {
+      this.$router.push(path);
     }
   }
 };

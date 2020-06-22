@@ -1,5 +1,8 @@
 <template>
-  <el-button type="primary" @click="open('12')">buttonCont</el-button>
+  <div>
+    <el-button type="primary" @click="open('12')">buttonCont</el-button>
+    <el-button type="primary" @click="goNext()">去下一页</el-button>
+  </div>
 </template>
 
 <script>
@@ -9,7 +12,15 @@ export default {
   methods: {
     open(id) {
       AgreementDialog.show({ id });
+    },
+    goNext(path) {
+      this.$router.push(path);
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log('enter');
+    });
   }
 };
 </script>

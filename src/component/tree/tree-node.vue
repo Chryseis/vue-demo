@@ -1,6 +1,6 @@
 <template>
   <div
-    class="el-tree-node"
+    class="el-tree-node d-tree-node"
     @click.stop="handleClick"
     @contextmenu="$event => this.handleContextMenu($event)"
     v-show="node.visible"
@@ -130,7 +130,7 @@ export default {
 
         return (tree.$scopedSlots.default
               ? tree.$scopedSlots.default({ node, data })
-              : <span class={`el-tree-node__label ${node.level===1&&'d-label-top-level'}`}>{ node.label + (!node.isLeaf?`(${checkedLeafs.length}/${allLeafs.length})`:'')}</span>
+              : <span class={`el-tree-node__label ${node.level===1&&'d-label-top-level'}`}>{ node.label + (!node.isLeaf?`（${checkedLeafs.length}/${allLeafs.length}）`:'')}</span>
         );
       }
     }
@@ -289,6 +289,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.d-tree-node {
+  padding: 0 5px;
+}
+
 .d-node {
   display: flex;
   justify-content: space-between;
@@ -299,6 +303,9 @@ export default {
   }
 
   .d-node-left {
+    display: flex;
+    align-items: center;
+
     .d-checkbox {
       margin-right: 10px;
     }
