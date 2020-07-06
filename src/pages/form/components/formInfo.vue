@@ -1,13 +1,18 @@
 <template>
-  <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item
-      label="年龄"
-      prop="age"
-      :rules="[
-        { required: true, message: '年龄不能为空' },
-        { type: 'number', message: '年龄必须为数字值' }
-      ]"
-    >
+  <el-form
+    :inline="true"
+    :model="numberValidateForm"
+    ref="numberValidateForm"
+    label-width="100px"
+    class="demo-ruleForm"
+  >
+    <el-form-item>
+      <common-input v-model="name" type="input" label="姓名" />
+    </el-form-item>
+    <el-form-item>
+      <common-input v-model="drugName" label="药店" type="autocomplete" />
+    </el-form-item>
+    <el-form-item label="年龄" prop="age">
       <el-input type="age" v-model.number="numberValidateForm.age" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item>
@@ -21,13 +26,19 @@
 </template>
 
 <script>
+import commonInput from '@/component/commonInput';
 export default {
   name: 'formInfo',
+  components: {
+    commonInput
+  },
   data() {
     return {
       numberValidateForm: {
         age: ''
-      }
+      },
+      name: '',
+      drugName: ''
     };
   },
   methods: {

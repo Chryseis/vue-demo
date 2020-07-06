@@ -1,5 +1,7 @@
 <template>
-  <form-info />
+  <div class="form-wrapper">
+    <form-info />
+  </div>
 </template>
 
 <script>
