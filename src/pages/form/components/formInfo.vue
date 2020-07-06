@@ -12,6 +12,13 @@
     <el-form-item>
       <common-input v-model="drugName" label="药店" type="autocomplete" />
     </el-form-item>
+    <el-form-item>
+      <common-input label="区域">
+        <el-select v-model="area">
+          <el-option v-for="item in optionsList" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </common-input>
+    </el-form-item>
     <el-form-item label="年龄" prop="age">
       <el-input type="age" v-model.number="numberValidateForm.age" autocomplete="off"></el-input>
     </el-form-item>
@@ -38,7 +45,22 @@ export default {
         age: ''
       },
       name: '',
-      drugName: ''
+      drugName: '',
+      area: '',
+      optionsList: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        },
+        {
+          value: '选项2',
+          label: '双皮奶'
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎'
+        }
+      ]
     };
   },
   methods: {
