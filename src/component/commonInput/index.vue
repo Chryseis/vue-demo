@@ -1,6 +1,6 @@
 <template>
-  <div ref="inputRef" class="drugstore-input-wrapper" :class="{ focus: isFocus }">
-    <div class="label">
+  <div ref="inputEl" class="drugstore-input-wrapper" :class="{ focus: isFocus }" :style="{ width }">
+    <div class="label" :style="{ width: labelWidth }">
       <slot name="label">
         <span class="label-text" :class="[labelAlign]">
           {{ label }}
@@ -10,19 +10,29 @@
     <div class="controller">
       <slot>
         <template v-if="type === 'input'">
-          <el-input :value="value" :placeholder="placeholder" @input="val => $emit('input', val)"></el-input>
+          <el-input
+            class="label-input"
+            :value="value"
+            :placeholder="placeholder"
+            @input="val => $emit('input', val)"
+          ></el-input>
         </template>
         <template v-else>
           <el-autocomplete
+            class="label-autocomplete"
             :value="value"
             valueKey="value"
             @input="val => $emit('input', val)"
             @select="item => $emit('select', item)"
             :trigger-on-focus="false"
             :fetch-suggestions="querySearch"
-            class="inline-input"
             :placeholder="placeholder"
-          ></el-autocomplete>
+            popper-class="label-autocomplete-popper"
+          >
+            <template #default="{item:{value}}">
+              <span class="autocomplete-item">{{ value }}</span>
+            </template>
+          </el-autocomplete>
         </template>
       </slot>
     </div>
@@ -33,8 +43,16 @@
 export default {
   name: 'drugstore-input',
   props: {
+    width:{
+      type:String,
+      default:'100%'
+    },
     label: {
       type: String
+    },
+    labelWidth:{
+      type:String,
+      default:'80px'
     },
     labelAlign: {
       type: String,
@@ -126,12 +144,12 @@ export default {
     }
   },
   mounted() {
-    this.$refs.inputRef.addEventListener('focusin', this.handleFocus)
-    this.$refs.inputRef.addEventListener('focusout', this.handleFocus)
+    this.$refs.inputEl.addEventListener('focusin', this.handleFocus)
+    this.$refs.inputEl.addEventListener('focusout', this.handleFocus)
   },
   beforeDestroy() {
-    this.$refs.inputRef.removeEventListener('focusin', this.handleFocus)
-    this.$refs.inputRef.removeEventListener('focusout', this.handleFocus)
+    this.$refs.inputEl.removeEventListener('focusin', this.handleFocus)
+    this.$refs.inputEl.removeEventListener('focusout', this.handleFocus)
   }
 };
 </script>
@@ -141,6 +159,7 @@ export default {
   display: flex;
   border: 1px solid #f2f2f2;
   border-radius: 4px;
+  box-sizing: border-box;
   transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:hover {
@@ -156,7 +175,6 @@ export default {
     padding: 0 12px;
     display: flex;
     align-items: center;
-    width: 80px;
     color: #707070;
     box-sizing: border-box;
 
@@ -196,9 +214,26 @@ export default {
   .controller {
     flex: 1;
 
+    .label-input,
+    .label-autocomplete {
+      width: 100%;
+    }
+
     /deep/ input {
       border: none !important;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.label-autocomplete-popper {
+  .autocomplete-item {
+    display: flex;
+    padding: 5px;
+    word-break: break-all;
+    white-space: break-spaces;
+    line-height: 1.5;
   }
 }
 </style>

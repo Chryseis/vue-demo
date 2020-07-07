@@ -2,19 +2,20 @@
   <el-form
     :inline="true"
     :model="numberValidateForm"
+    :rules="rules"
     ref="numberValidateForm"
     label-width="100px"
     class="demo-ruleForm"
   >
-    <el-form-item>
-      <common-input v-model="name" type="input" label="姓名" />
+    <el-form-item prop="name">
+      <common-input v-model="numberValidateForm.name" type="input" label="姓名" />
     </el-form-item>
-    <el-form-item>
-      <common-input v-model="drugName" label="药店" type="autocomplete" />
+    <el-form-item prop="drugName">
+      <common-input width="500px" v-model="numberValidateForm.drugName" label="药店" type="autocomplete" />
     </el-form-item>
-    <el-form-item>
+    <el-form-item prop="area">
       <common-input label="区域">
-        <el-select v-model="area">
+        <el-select v-model="numberValidateForm.area">
           <el-option v-for="item in optionsList" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </common-input>
@@ -42,11 +43,15 @@ export default {
   data() {
     return {
       numberValidateForm: {
-        age: ''
+        name: '',
+        drugName: '',
+        area: ''
       },
-      name: '',
-      drugName: '',
-      area: '',
+      rules: {
+        name: [{ required: true, message: '请输入名字地址', trigger: 'blur' }],
+        drugName: [{ required: true, message: '请输入药店地址', trigger: 'blur' }],
+        area: [{ required: true, message: '请输入区域地址', trigger: 'blur' }]
+      },
       optionsList: [
         {
           value: '选项1',
