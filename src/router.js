@@ -1,28 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import dialog from '@/pages/dialog';
-import form from '@/pages/form';
-import list from '@/pages/list';
+const context = require.context('./pages', true, /index.vue$/);
+
+const routes = context.keys().map(key => {
+  const [pagePath, name] = key.match(/\.\/(\w+)\/index.vue/);
+  return {
+    path: `/${name}`,
+    name,
+    component: context(pagePath).default
+  };
+});
 
 Vue.use(VueRouter);
-
-const routes = [
-  {
-    path: '/',
-    name: 'dialog',
-    component: dialog
-  },
-  {
-    path: '/form',
-    name: 'form',
-    component: form
-  },
-  {
-    path: '/list',
-    name: 'list',
-    component: list
-  }
-];
 
 export default new VueRouter({ routes });
