@@ -51,7 +51,7 @@
         ]"
       ></span>
     </div>
-    <el-collapse-transition>
+    <Dtree>
       <div
         class="el-tree-node__children"
         v-if="!renderAfterExpand || childNodeRendered"
@@ -69,12 +69,13 @@
           @node-expand="handleChildNodeExpand"
         ></el-tree-node>
       </div>
-    </el-collapse-transition>
+    </Dtree>
   </div>
 </template>
 
 <script type="text/jsx">
 import ElCollapseTransition from './d-transition';
+import Dtree from './d-transition-vue'
 import ElCheckbox from 'element-ui/packages/checkbox';
 import emitter from 'element-ui/src/mixins/emitter';
 import { getNodeKey } from './model/util';
@@ -105,7 +106,8 @@ export default {
   },
 
   components: {
-    ElCollapseTransition,
+    Dtree,
+   // ElCollapseTransition,
     ElCheckbox,
     NodeContent: {
       props: {
