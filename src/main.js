@@ -1,5 +1,4 @@
 import 'element-ui/lib/theme-chalk/index.css';
-import 'vant/lib/index.css';
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import Vant from 'vant';
