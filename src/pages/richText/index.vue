@@ -14,15 +14,22 @@
 <script>
 import 'quill/dist/quill.core.css';
 import Quill from 'quill';
+import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
+
+Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
 let quill = null;
 
 export default {
   name: 'richText',
   props: {
-    value: {
+    defaultValue: {
       type: String,
-      default: 'sb'
+      default: ''
+    },
+    maxLength: {
+      type: Number,
+      default: 250
     }
   },
   mounted() {
@@ -33,18 +40,53 @@ export default {
       quill = new Quill(this.$refs.editor, {
         modules: {
           toolbar: this.$refs.toolbar,
-          keyboard: {}
+          keyboard: {
+            bindings: {
+              send: {
+                key: 13,
+                handler: (range, content) => {
+                  this.send();
+                  console.log('send', quill.getContents(), quill.getText().replace(/\n/g, '').length);
+                }
+              },
+              newline: {
+                key: 13,
+                ctrlKey: true,
+                handler: range => {
+                  quill.insertText(range.index, '\n');
+                }
+              }
+            }
+          },
+          imageDropAndPaste: {
+            handler: (imageDataUrl, type, imageData) => {
+              console.log(imageDataUrl, type, imageData);
+              const filename = ` img_${+new Date()}`;
+              const file = imageData.toFile(filename);
+            }
+          }
         },
         placeholder: '请输入消息',
         scrollingContainer: this.$refs.editor
       });
 
       quill.on('text-change', (delta, oldDelta, source) => {
-        console.log(delta, oldDelta, source, quill.getText());
+        if (quill.getText().length > this.maxLength) {
+          quill.deleteText(this.maxLength, 1);
+        }
       });
 
-      quill.setText(this.value);
-    }
+      quill.setText(this.defaultValue);
+    },
+    send() {
+      quill.getContents().forEach(({ insert }) => {
+        typeof insert === 'object'
+          ? this.$emit('sendImage')
+          : this.$emit('send', quill.getText().replace(/(^\s*)|(\s*$)/g, ''));
+        quill.setText('');
+      });
+    },
+    addImage() {}
   }
 };
 </script>
