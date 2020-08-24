@@ -1,6 +1,7 @@
 <template>
   <div class="form-wrapper">
     <form-info />
+    <div @click="onClick">click</div>
   </div>
 </template>
 
@@ -9,9 +10,16 @@ import formInfo from './components/formInfo';
 
 export default {
   data() {
-    return {};
+    return {
+      a: true
+    };
   },
-  methods: {},
+  methods: {
+    onClick() {
+      this.a = !this.a;
+      console.log('click');
+    }
+  },
   components: {
     formInfo
   },
@@ -19,6 +27,12 @@ export default {
     // window.addEventListener('popstate', function() {
     //   history.pushState(null, null, document.URL);
     // });
+  },
+  beforeUpdate() {
+    console.log('beforeUpdate');
+  },
+  updated() {
+    console.log('updated');
   },
   beforeRouteLeave(to, from, next) {
     // next(false);
