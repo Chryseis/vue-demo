@@ -19,7 +19,7 @@ function readWorkbookFromLocalFile(url, callback) {
   xhr.send();
 }
 
-readWorkbookFromLocalFile('/test.xlsx', workbook => console.log(workbook));
+readWorkbookFromLocalFile('/test.xlsx', workbook => workbook);
 
 export default {
   name: 'index',
