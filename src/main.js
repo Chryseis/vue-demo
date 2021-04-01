@@ -17,3 +17,14 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app');
+
+document.addEventListener('DOMContentLoaded', () => {
+  const event = document.createEvent('Events');
+  event.initEvent('myJSBridgeReady', false, true);
+  event.data = 'myJSBridgeReady';
+  document.dispatchEvent(event);
+});
+
+document.addEventListener('myJSBridgeReady', () => {
+  console.log('haha');
+});

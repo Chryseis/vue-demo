@@ -16,9 +16,6 @@
       </el-col>
     </el-row>
     <el-row :gutter="10">
-      <el-col :span="6"></el-col>
-    </el-row>
-    <el-row :gutter="10">
       <el-col :span="10">
         <el-col>
           <div class="store-list">
@@ -27,6 +24,9 @@
           </div>
         </el-col>
       </el-col>
+    </el-row>
+    <el-row :gutter="10">
+      <el-col :span="6"><el-button type="primary" @click="$router.push('/transition')">back</el-button></el-col>
     </el-row>
   </div>
 </template>

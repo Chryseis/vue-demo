@@ -3,6 +3,7 @@
     <div class="btn-group">
       <el-button type="primary" @click="add">add</el-button>
       <el-button type="primary" @click="remove">sub</el-button>
+      <el-button type="primary" @click="$router.push('/list')">back</el-button>
     </div>
     <transition-group tag="div" class="card-wrapper" name="card">
       <div class="card" :key="box" v-for="box in boxes">
