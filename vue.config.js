@@ -6,6 +6,9 @@ const env = dotenv.config({ path: path.resolve(__dirname, '.env.prod') });
 dotenvExpand(env);
 
 module.exports = {
+  devServer: {
+    port: 8081
+  },
   chainWebpack: config => {
     config.plugin('define').use(require('webpack/lib/DefinePlugin'), [{ 'process.env': JSON.stringify(process.env) }]);
   }

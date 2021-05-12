@@ -1,11 +1,8 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%;margin-bottom: 20px;"
-    row-key="id"
-    border
-    :tree-props="{ children: 'children' }"
-  >
+  <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" border>
+    <el-table-column header-align="center" width="80" align="center" prop="columnProp" label="">
+      <el-radio v-model="radio"></el-radio>
+    </el-table-column>
     <el-table-column prop="date" label="日期" sortable width="180"></el-table-column>
     <el-table-column prop="name" label="姓名" sortable width="180"></el-table-column>
     <el-table-column prop="address" label="地址"></el-table-column>
@@ -74,8 +71,13 @@ export default {
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }
-      ]
+      ],
+      radio: false
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('beforeRouteLeave');
+    next();
   }
 };
 </script>
