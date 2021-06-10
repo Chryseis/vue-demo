@@ -6,10 +6,13 @@ import ElementUI from 'element-ui';
 import Vant from 'vant';
 import App from './App.vue';
 import router from '@/router';
-import '@/utils/performance';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
+
+window.addEventListener('load', () => {
+  console.log('main.js', 'window');
+});
 
 Vue.use(ElementUI);
 Vue.use(Vant);
@@ -18,3 +21,7 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app');
+
+// window.onload = () => {
+//   console.log('main.js load');
+// };

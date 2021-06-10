@@ -844,6 +844,80 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@mitojs/browser@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/browser/download/@mitojs/browser-2.1.14.tgz#97b58118d2984922f86a8404fffad9118ddd844f"
+  integrity sha1-l7WBGNKYSSL4aoQE//rZEY3dhE8=
+  dependencies:
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/types" "2.1.14"
+    "@mitojs/utils" "2.1.14"
+
+"@mitojs/core@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/core/download/@mitojs/core-2.1.14.tgz#91bad4ce460e7ea46a2b0e011a2aeb038cb8df28"
+  integrity sha1-kbrUzkYOfqRqKw4BGirrA4y43yg=
+  dependencies:
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/types" "2.1.14"
+    "@mitojs/utils" "2.1.14"
+
+"@mitojs/react@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/react/download/@mitojs/react-2.1.14.tgz#63d08dc007272318b593f674b990d4348c579672"
+  integrity sha1-Y9CNwAcnIxi1k/Z0uZDUNIxXlnI=
+  dependencies:
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/utils" "2.1.14"
+
+"@mitojs/shared@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/shared/download/@mitojs/shared-2.1.14.tgz#e0eed917bd16df895de988b007c8e566be90f869"
+  integrity sha1-4O7ZF70W34ld6YiwB8jlZr6Q+Gk=
+
+"@mitojs/types@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/types/download/@mitojs/types-2.1.14.tgz#f07cefe08f544bb3a89ebd9915207de5995c1fed"
+  integrity sha1-8Hzv4I9US7Oonr2ZFSB95ZlcH+0=
+  dependencies:
+    "@mitojs/browser" "2.1.14"
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/utils" "2.1.14"
+    "@types/wechat-miniprogram" "^3.1.0"
+
+"@mitojs/utils@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/utils/download/@mitojs/utils-2.1.14.tgz#51b57524c55843a28755262833e5f2574c16c37d"
+  integrity sha1-UbV1JMVYQ6KHVSYoM+XyV0wWw30=
+  dependencies:
+    "@mitojs/browser" "2.1.14"
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/types" "2.1.14"
+
+"@mitojs/vue@2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/vue/download/@mitojs/vue-2.1.14.tgz#21a731fe3f8c89a480aa0bab8013a0bb187a7a3f"
+  integrity sha1-Iacx/j+MiaSAqgurgBOguxh6ej8=
+  dependencies:
+    "@mitojs/core" "2.1.14"
+    "@mitojs/shared" "2.1.14"
+    "@mitojs/types" "2.1.14"
+    "@mitojs/utils" "2.1.14"
+
+"@mitojs/web@^2.1.14":
+  version "2.1.14"
+  resolved "https://registry.nlark.com/@mitojs/web/download/@mitojs/web-2.1.14.tgz#6f6768f8badd54ec1aafe0ab9c527cb4d6136f70"
+  integrity sha1-b2do+LrdVOwar+CrnFJ8tNYTb3A=
+  dependencies:
+    "@mitojs/browser" "2.1.14"
+    "@mitojs/react" "2.1.14"
+    "@mitojs/vue" "2.1.14"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -914,6 +988,11 @@
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
+
+"@types/wechat-miniprogram@^3.1.0":
+  version "3.3.0"
+  resolved "https://registry.nlark.com/@types/wechat-miniprogram/download/@types/wechat-miniprogram-3.3.0.tgz#e56cca3caecc09c7440ea9d3cc35b9617bcbc559"
+  integrity sha1-5WzKPK7MCcdEDqnTzDW5YXvLxVk=
 
 "@vant/icons@1.2.3":
   version "1.2.3"

@@ -28,23 +28,26 @@ function readWorkbookFromLocalFile(url, callback) {
 
 readWorkbookFromLocalFile('/test.xlsx', workbook => workbook);
 
+let id;
+
 export default {
   name: 'index',
   mounted() {
     this.moveContent();
+  },
+  beforeDestroy() {
+    cancelAnimationFrame(id);
   },
   methods: {
     moveContent() {
       const wrapperEL = this.$refs.wrapper;
       const contentEL = this.$refs.content;
 
-      console.log(wrapperEL.clientWidth, contentEL.scrollWidth);
-
       const move = (deltaX = 0) => {
         let scrollWidth = contentEL.scrollWidth;
         if (Math.abs(deltaX) < scrollWidth) {
           contentEL.style = `transform:translate(${deltaX}px, 0)`;
-          requestAnimationFrame(() => move(deltaX - 1));
+          id = requestAnimationFrame(() => move(deltaX - 1));
         } else {
           contentEL.style = `transform:translate(${wrapperEL.scrollWidth}px,0)`;
           move(wrapperEL.clientWidth);

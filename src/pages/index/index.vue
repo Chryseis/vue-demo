@@ -12,6 +12,7 @@
 
 <script>
 import { routes } from '@/router';
+import { observer, observer1, observer2 } from '@/utils/performance';
 import axios from 'axios';
 
 export default {
@@ -22,23 +23,10 @@ export default {
     };
   },
   mounted() {
-    window.onload = function() {
-      console.log('load', document.readyState);
-    };
-
-    new Promise(resolve => {
-      setTimeout(() => {
-        console.log(1);
-        resolve();
-      }, 3000);
+    console.log('mounted');
+    this.$nextTick(() => {
+      console.log('mounted2', performance.now());
     });
-    // const httpInstance = axios.create({
-    //   baseURL: 'https://abc.test.com',
-    //   timeout: 20000,
-    //   withCredentials: true
-    // });
-    //
-    // httpInstance.get('/text').then(() => httpInstance.get('/text1'));
   }
 };
 </script>
