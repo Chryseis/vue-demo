@@ -7,11 +7,17 @@ import Vant from 'vant';
 import App from './App.vue';
 import router from '@/router';
 
+console.log('main.js load', performance.now());
+
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
 
 window.addEventListener('load', () => {
-  console.log('main.js', 'window');
+  console.log('load', performance.now());
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded', performance.now());
 });
 
 Vue.use(ElementUI);

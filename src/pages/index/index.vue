@@ -7,6 +7,16 @@
     >
       {{ route.name }}
     </el-button>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
+    <div class="block" v-if="visible">Loading block</div>
   </div>
 </template>
 
@@ -19,14 +29,27 @@ export default {
   name: 'index',
   data() {
     return {
-      routes
+      routes,
+      visible: false
     };
   },
   mounted() {
-    console.log('mounted');
+    console.log('mounted1', performance.now());
+    //this.visible = true;
     this.$nextTick(() => {
       console.log('mounted2', performance.now());
+      //this.visible = true;
     });
+
+    let i = 0;
+
+    while (i < 100000) {
+      i = i + 1;
+    }
+
+    // new Promise(resolve => {
+    //   setTimeout(() => (this.visible = true), 3000);
+    // });
   }
 };
 </script>
@@ -38,5 +61,10 @@ export default {
   justify-content: center;
   margin: 0 auto;
   width: 70%;
+
+  .block {
+    width: 100px;
+    height: 50px;
+  }
 }
 </style>
