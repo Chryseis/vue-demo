@@ -1,6 +1,6 @@
 module.exports = {
   tabWidth: 2,
-  semi: true,
+  semi: false,
   singleQuote: true,
   jsxSingleQuote: true,
   proseWrap: 'never',
@@ -10,4 +10,4 @@ module.exports = {
   printWidth: 120,
   htmlWhitespaceSensitivity: 'ignore', //vue-html尖括号掉行
   arrowParens: 'avoid'
-};
+}

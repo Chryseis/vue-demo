@@ -1,70 +1,80 @@
 <template>
   <div class="wrapper">
-    <el-button
-      v-for="route in routes.filter(r => r.name !== 'index')"
-      :key="route.name"
-      @click="$router.push(route.path)"
-    >
-      {{ route.name }}
-    </el-button>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
-    <div class="block" v-if="visible">Loading block</div>
+    <section class="entries">
+      <el-button
+        v-for="route in routes.filter(r => r.name !== 'index')"
+        :key="route.name"
+        @click="$router.push(route.path)"
+      >
+        {{ route.name }}
+      </el-button>
+    </section>
+    <section class="person-info">
+      <div class="label">name:{{ data.name }}</div>
+      <div class="label">sex:{{ data.sex }}</div>
+      <div class="label">major:{{ data.major }}</div>
+    </section>
   </div>
 </template>
 
 <script>
-import { routes } from '@/router';
-import { observer, observer1, observer2 } from '@/utils/performance';
-import axios from 'axios';
+import { routes } from '@/router'
 
 export default {
   name: 'index',
   data() {
     return {
       routes,
-      visible: false
-    };
+      data: null
+    }
   },
   mounted() {
-    console.log('mounted1', performance.now());
-    //this.visible = true;
-    this.$nextTick(() => {
-      console.log('mounted2', performance.now());
-      //this.visible = true;
-    });
-
-    let i = 0;
+    let i = 0
 
     while (i < 100000) {
-      i = i + 1;
+      i = i + 1
     }
 
-    // new Promise(resolve => {
-    //   setTimeout(() => (this.visible = true), 3000);
-    // });
+    this.mockRequest({
+      name: 'allen',
+      sex: 'male',
+      major: 'engineer'
+    }).then(data => {
+      this.data = data
+    })
+  },
+  methods: {
+    mockRequest(data, delay) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(data)
+        }, delay)
+      })
+    },
+    computePerformance() {
+      const navigationTiming = performance.getEntriesByType('navigation')[0]
+      const resource = performance.getEntriesByType('resource')
+
+      const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
+      const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
+      const html = navigationTiming.responseEnd - navigationTiming.requestStart
+      const dom = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
-  width: 70%;
+  .entries {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto 20px;
+    width: 70%;
+  }
 
-  .block {
-    width: 100px;
-    height: 50px;
+  .person-info {
   }
 }
 </style>
