@@ -58,7 +58,23 @@ export default {
       const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
       const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
       const html = navigationTiming.responseEnd - navigationTiming.requestStart
-      const dom = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
+      const domParse = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
+      const domComplete = navigationTiming.domComplete - navigationTiming.fetchStart
+      const ccp = performance.now()
+      const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint').startTime
+      let lcp
+
+      const po = new PerformanceObserver(l => {
+        l.getEntries().map(entry => {
+          lcp = entry.startTime
+        })
+      })
+
+      po.observe({ type: 'largest-contentful-paint', buffered: true })
+
+      if (lcp) {
+        __bl.performance({})
+      }
     }
   }
 }

@@ -14,24 +14,30 @@
 </template>
 
 <script>
+import store from '@/utils/store'
+
 export default {
   name: 'index',
   data() {
     return {
       boxes: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    };
+    }
+  },
+  mounted() {
+    console.log(store.get())
+    store.set(2)
   },
   methods: {
     add() {
-      const number = Math.floor(Math.random() * 100);
-      this.boxes = this.boxes.concat(number);
+      const number = Math.floor(Math.random() * 100)
+      this.boxes = this.boxes.concat(number)
     },
     remove() {
-      const randomIdx = Math.floor(Math.random() * this.boxes.length);
-      this.boxes = this.boxes.filter((o, i) => i !== randomIdx);
+      const randomIdx = Math.floor(Math.random() * this.boxes.length)
+      this.boxes = this.boxes.filter((o, i) => i !== randomIdx)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

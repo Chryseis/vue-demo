@@ -1,12 +1,47 @@
 const observer = new PerformanceObserver((list, observe) => {
-  console.log(list.getEntries());
+  const roundByFour = (num, digits = 4) => {
+    return parseFloat(num.toFixed(digits))
+  }
+
+  list.getEntries().map(entry => {
+    const {
+      domainLookupStart,
+      domainLookupEnd,
+      connectStart,
+      connectEnd,
+      secureConnectionStart,
+      requestStart,
+      responseStart,
+      responseEnd,
+      domInteractive,
+      domContentLoadedEventEnd,
+      loadEventStart,
+      fetchStart
+    } = entry
+
+    const navigation = {
+      dnsLookup: roundByFour(domainLookupEnd - domainLookupStart),
+      initialConnection: roundByFour(connectEnd - connectStart),
+      ssl: roundByFour(connectEnd - secureConnectionStart),
+      ttfb: roundByFour(responseStart - requestStart),
+      contentDownload: roundByFour(responseEnd - responseStart),
+      domParse: roundByFour(domInteractive - responseEnd),
+      resourceDownload: roundByFour(loadEventStart - domContentLoadedEventEnd),
+      domReady: roundByFour(domContentLoadedEventEnd - fetchStart),
+      pageLoad: roundByFour(loadEventStart - fetchStart)
+    }
+    console.log(navigation)
+    return navigation
+  })
   observe.disconnect();
 });
-observer.observe({ entryTypes: ['navigation'] });
+observer.observe({ type:'navigation',buffered:true });
 
 const observer1 = new PerformanceObserver((list, observe) => {
-  console.log(list.getEntries());
-  //observe.disconnect();
+  list.getEntries().map(entry=>{
+    console.log(entry)
+  })
+  observe.disconnect();
 });
 observer1.observe({ type: 'first-input', buffered: true });
 

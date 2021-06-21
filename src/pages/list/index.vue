@@ -35,6 +35,7 @@
 import { MessageBox, Message } from 'element-ui';
 import area from '../../assets/area.json';
 import tree from '../../component/tree/tree'
+import store from "@/utils/store";
 
 const mergeAreaData = (areaData, initData = []) => {
   return Object.keys(areaData).reduce((adapterAreaData, key) => {
@@ -94,6 +95,7 @@ export default {
   },
   mounted() {
     this.$refs.tree.setCheckedKeys(['110101']);
+    console.log(store.get())
   },
   watch: {
     filterText(val) {
