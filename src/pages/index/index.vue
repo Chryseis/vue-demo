@@ -56,14 +56,14 @@ export default {
       })
     },
     computePerformance() {
-      window.addEventListener('onload', () => {
+      window.addEventListener('load', () => {
         const navigationTiming = performance.getEntriesByType('navigation')[0]
         const resource = performance.getEntriesByType('resource')
 
         const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
         const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
         const html = navigationTiming.responseEnd - navigationTiming.requestStart
-        const domParse = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
+        const domParse = navigationTiming.domInteractive - navigationTiming.responseEnd
         const domComplete = navigationTiming.domComplete - navigationTiming.fetchStart
         const ccp = performance.now()
         const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')
@@ -77,10 +77,11 @@ export default {
                 ctti: ccp,
                 t1: dns,
                 t2: tcp,
-                t3: html,
-                t4: domParse,
-                t5: domComplete,
-                t6: entry.startTime
+                t3: navigationTiming.requestStart,
+                t4: navigationTiming.responseEnd,
+                t5: html,
+                t6: entry.startTime,
+                t7: domParse
               })
             }
           })
