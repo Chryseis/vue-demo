@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       routes,
-      data: null
+      data: {}
     }
   },
   mounted() {
@@ -35,12 +35,16 @@ export default {
       i = i + 1
     }
 
-    this.mockRequest({
-      name: 'allen',
-      sex: 'male',
-      major: 'engineer'
-    }).then(data => {
+    this.mockRequest(
+      {
+        name: 'allen',
+        sex: 'male',
+        major: 'engineer'
+      },
+      300
+    ).then(data => {
       this.data = data
+      this.computePerformance()
     })
   },
   methods: {
@@ -52,29 +56,38 @@ export default {
       })
     },
     computePerformance() {
-      const navigationTiming = performance.getEntriesByType('navigation')[0]
-      const resource = performance.getEntriesByType('resource')
+      window.addEventListener('onload', () => {
+        const navigationTiming = performance.getEntriesByType('navigation')[0]
+        const resource = performance.getEntriesByType('resource')
 
-      const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
-      const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
-      const html = navigationTiming.responseEnd - navigationTiming.requestStart
-      const domParse = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
-      const domComplete = navigationTiming.domComplete - navigationTiming.fetchStart
-      const ccp = performance.now()
-      const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint').startTime
-      let lcp
+        const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
+        const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
+        const html = navigationTiming.responseEnd - navigationTiming.requestStart
+        const domParse = navigationTiming.domContentLoadedEventEnd - navigationTiming.domInteractive
+        const domComplete = navigationTiming.domComplete - navigationTiming.fetchStart
+        const ccp = performance.now()
+        const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')
+          .startTime
 
-      const po = new PerformanceObserver(l => {
-        l.getEntries().map(entry => {
-          lcp = entry.startTime
+        const po = new PerformanceObserver(l => {
+          l.getEntries().map(entry => {
+            if (entry.startTime) {
+              __bl.performance({
+                cfpt: fcp,
+                ctti: ccp,
+                t1: dns,
+                t2: tcp,
+                t3: html,
+                t4: domParse,
+                t5: domComplete,
+                t6: entry.startTime
+              })
+            }
+          })
         })
+
+        po.observe({ type: 'largest-contentful-paint', buffered: true })
       })
-
-      po.observe({ type: 'largest-contentful-paint', buffered: true })
-
-      if (lcp) {
-        __bl.performance({})
-      }
     }
   }
 }
