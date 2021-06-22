@@ -13,7 +13,10 @@ Vue.config.productionTip = false
 Vue.config.devtools = true
 
 window.addEventListener('load', () => {
-  const navigation = performance.getEntriesByType('navigation')[0]
+  const navigation =
+    performance.getEntriesByType('navigation').length > 0
+      ? performance.getEntriesByType('navigation')[0]
+      : performance.timing
   console.log('load', performance.now())
   console.log('domInteractive', navigation.domInteractive)
   console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)

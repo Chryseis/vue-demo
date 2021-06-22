@@ -56,38 +56,79 @@ export default {
       })
     },
     computePerformance() {
+      const roundByFour = (num, digits = 4) => {
+        try {
+          return parseFloat(num.toFixed(digits))
+        } catch (e) {
+          return 0
+        }
+      }
+
       window.addEventListener('load', () => {
-        const navigationTiming = performance.getEntriesByType('navigation')[0]
+        const navigationTiming =
+          performance.getEntriesByType('navigation').length > 0
+            ? performance.getEntriesByType('navigation')[0]
+            : performance.timing
         const resource = performance.getEntriesByType('resource')
 
         const dns = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart
         const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
         const html = navigationTiming.responseEnd - navigationTiming.requestStart
         const domParse = navigationTiming.domInteractive - navigationTiming.responseEnd
-        const domComplete = navigationTiming.domComplete - navigationTiming.fetchStart
         const ccp = performance.now()
         const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')
-          .startTime
+          ?.startTime
 
-        const po = new PerformanceObserver(l => {
-          l.getEntries().map(entry => {
-            if (entry.startTime) {
-              __bl.performance({
-                cfpt: fcp,
-                ctti: ccp,
-                t1: dns,
-                t2: tcp,
-                t3: navigationTiming.requestStart,
-                t4: navigationTiming.responseEnd,
-                t5: html,
-                t6: entry.startTime,
-                t7: domParse
-              })
-            }
+        const jsArr = resource.filter(r => /^.+\.js(?:\?.+|)$/.test(r.name))
+        const cssArr = resource.filter(r => /^.+\.css(?:\?.+|)$/.test(r.name))
+
+        const jsLoadDuration =
+          jsArr.length > 0
+            ? Math.max(...jsArr.map(ele => ele.responseEnd)) - Math.min(...jsArr.map(ele => ele.fetchStart))
+            : 0
+
+        const cssLoadDuration =
+          cssArr.length > 0
+            ? Math.max(...cssArr.map(ele => ele.responseEnd)) - Math.min(...cssArr.map(ele => ele.fetchStart))
+            : 0
+
+        if (!!PerformanceObserver && PerformanceObserver.supportedEntryTypes.includes('largest-contentful-paint')) {
+          const po = new PerformanceObserver(l => {
+            l.getEntries().map(entry => {
+              if (entry.startTime) {
+                __bl.performance({
+                  cfpt: roundByFour(fcp),
+                  ctti: roundByFour(ccp),
+                  t1: roundByFour(dns),
+                  t2: roundByFour(tcp),
+                  t3: roundByFour(navigationTiming.requestStart),
+                  t4: roundByFour(navigationTiming.responseEnd),
+                  t5: roundByFour(html),
+                  t6: roundByFour(entry.startTime),
+                  t7: roundByFour(domParse),
+                  t8: roundByFour(jsLoadDuration),
+                  t9: roundByFour(cssLoadDuration)
+                })
+              }
+            })
           })
-        })
 
-        po.observe({ type: 'largest-contentful-paint', buffered: true })
+          po.observe({ type: 'largest-contentful-paint', buffered: true })
+        } else {
+          __bl.performance({
+            cfpt: roundByFour(fcp),
+            ctti: roundByFour(ccp),
+            t1: roundByFour(dns),
+            t2: roundByFour(tcp),
+            t3: roundByFour(navigationTiming.requestStart),
+            t4: roundByFour(navigationTiming.responseEnd),
+            t5: roundByFour(html),
+            t6: 0,
+            t7: roundByFour(domParse),
+            t8: roundByFour(jsLoadDuration),
+            t9: roundByFour(cssLoadDuration)
+          })
+        }
       })
     }
   }
