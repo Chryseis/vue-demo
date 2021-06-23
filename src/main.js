@@ -21,6 +21,7 @@ window.addEventListener('load', () => {
   console.log('domInteractive', navigation.domInteractive)
   console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)
   console.log('domComplete', navigation.domComplete)
+  console.log('loadEventStart', navigation.loadEventStart)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
