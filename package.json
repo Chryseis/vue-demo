@@ -25,7 +25,7 @@
     "vue-virtual-scroll-list": "^2.3.1",
     "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.24.3",
-    "xlsx": "^0.16.7"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
