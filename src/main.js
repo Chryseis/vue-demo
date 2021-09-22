@@ -22,6 +22,16 @@ window.addEventListener('load', () => {
   console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)
   console.log('domComplete', navigation.domComplete)
   console.log('loadEventStart', navigation.loadEventStart)
+
+  const po = new PerformanceObserver(list => {
+    list.getEntries().forEach(entry => {
+      if (entry.name === 'first-contentful-paint') {
+        console.log(entry.startTime, entry.entryType)
+      }
+    })
+  })
+
+  po.observe({ type: 'paint', buffered: true })
 })
 
 document.addEventListener('DOMContentLoaded', () => {

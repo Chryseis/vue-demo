@@ -4,7 +4,7 @@
       <el-button
         v-for="route in routes.filter(r => r.name !== 'index')"
         :key="route.name"
-        @click="$router.push(route.path)"
+        @click="jump2Page(route.path)"
       >
         {{ route.name }}
       </el-button>
@@ -21,6 +21,7 @@
 
 <script>
 import { routes } from '@/router'
+import axios from 'axios'
 
 export default {
   name: 'index',
@@ -31,6 +32,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchUrl()
     this.mockRequest(
       {
         name: 'allen',
@@ -41,7 +43,7 @@ export default {
       300
     ).then(data => {
       this.data = data
-      this.computePerformance()
+      // this.computePerformance()
     })
   },
   methods: {
@@ -78,7 +80,7 @@ export default {
 
         const jsArr = resource.filter(r => /^.+\.js(?:\?.+|)$/.test(r.name))
         const cssArr = resource.filter(r => /^.+\.css(?:\?.+|)$/.test(r.name))
-        const images = document.querySelectorAll('img')
+        const images = document.querySelectorAll('imgs')
 
         images.forEach(image => {
           image.onload = () => {
@@ -157,7 +159,26 @@ export default {
       }
     },
     imgLoad(e) {
-      console.log('img load', e, performance.now())
+      console.log('imgs load', performance.now())
+    },
+    fetchUrl() {
+      const request = axios.create()
+
+      request
+        .get('https://76f49b91-f08e-4f2e-a611-3152b3384631.mock.pstmn.io/performance/getPageWaterFall', {
+          params: {
+            startDate: '2021-08-11 09:00:00',
+            endDate: '2021-08-11 23:00:00',
+            projectId: 10
+          },
+          withCredentials: true
+        })
+        .then(data => {
+          console.log(data)
+        })
+    },
+    jump2Page(path) {
+      this.$router.push(path)
     }
   }
 }
