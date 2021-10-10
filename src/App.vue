@@ -8,8 +8,11 @@
 
 <script>
 export default {
-  name: 'App'
-};
+  name: 'App',
+  mounted() {
+    window.wv.customContentfulPaint()
+  }
+}
 </script>
 
 <style lang="scss">

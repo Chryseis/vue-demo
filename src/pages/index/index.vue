@@ -33,18 +33,18 @@ export default {
   },
   mounted() {
     this.fetchUrl()
-    this.mockRequest(
-      {
-        name: 'allen',
-        sex: 'male',
-        major: 'engineer',
-        src: require('@/assets/imgs/img2.png')
-      },
-      300
-    ).then(data => {
-      this.data = data
-      // this.computePerformance()
-    })
+    // this.mockRequest(
+    //   {
+    //     name: 'allen',
+    //     sex: 'male',
+    //     major: 'engineer',
+    //     src: require('@/assets/imgs/img2.png')
+    //   },
+    //   300
+    // ).then(data => {
+    //   this.data = data
+    //   // this.computePerformance()
+    // })
   },
   methods: {
     mockRequest(data, delay) {
@@ -165,14 +165,17 @@ export default {
       const request = axios.create()
 
       request
-        .get('https://76f49b91-f08e-4f2e-a611-3152b3384631.mock.pstmn.io/performance/getPageWaterFall', {
-          params: {
-            startDate: '2021-08-11 09:00:00',
-            endDate: '2021-08-11 23:00:00',
-            projectId: 10
-          },
-          withCredentials: true
-        })
+        .get(
+          'https://76f49b91-f08e-4f2e-a611-3152b3384631.mock.pstmn.io/performance/getMetricsTrendList?startDate=2021-08-17%2000:00:00&endDate=2021-08-17%2023:00:00&projectId=10&href=http://www.baidu.com',
+          {
+            params: {
+              startDate: '2021-08-11 09:00:00',
+              endDate: '2021-08-11 23:00:00',
+              projectId: 10
+            },
+            withCredentials: false
+          }
+        )
         .then(data => {
           console.log(data)
         })

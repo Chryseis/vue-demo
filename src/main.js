@@ -12,31 +12,31 @@ console.log('main.js load', performance.now())
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
-window.addEventListener('load', () => {
-  const navigation =
-    performance.getEntriesByType('navigation').length > 0
-      ? performance.getEntriesByType('navigation')[0]
-      : performance.timing
-  console.log('load', performance.now())
-  console.log('domInteractive', navigation.domInteractive)
-  console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)
-  console.log('domComplete', navigation.domComplete)
-  console.log('loadEventStart', navigation.loadEventStart)
-
-  const po = new PerformanceObserver(list => {
-    list.getEntries().forEach(entry => {
-      if (entry.name === 'first-contentful-paint') {
-        console.log(entry.startTime, entry.entryType)
-      }
-    })
-  })
-
-  po.observe({ type: 'paint', buffered: true })
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded', performance.now())
-})
+// window.addEventListener('load', () => {
+//   const navigation =
+//     performance.getEntriesByType('navigation').length > 0
+//       ? performance.getEntriesByType('navigation')[0]
+//       : performance.timing
+//   console.log('load', performance.now())
+//   console.log('domInteractive', navigation.domInteractive)
+//   console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)
+//   console.log('domComplete', navigation.domComplete)
+//   console.log('loadEventStart', navigation.loadEventStart)
+//
+//   const po = new PerformanceObserver(list => {
+//     list.getEntries().forEach(entry => {
+//       if (entry.name === 'first-contentful-paint') {
+//         console.log(entry.startTime, entry.entryType)
+//       }
+//     })
+//   })
+//
+//   po.observe({ type: 'paint', buffered: true })
+// })
+//
+// document.addEventListener('DOMContentLoaded', () => {
+//   console.log('DOMContentLoaded', performance.now())
+// })
 
 Vue.use(ElementUI)
 Vue.use(Vant)
