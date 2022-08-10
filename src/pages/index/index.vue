@@ -11,20 +11,39 @@
     </section>
     <img src="@/assets/imgs/img1.png" alt="" @load="imgLoad" />
     <img :src="data.src" alt="" @load="imgLoad" />
+    <img src="https://allen-static.oss-cn-beijing.aliyuncs.com/assets/banner.jpg" alt="" />
+    <img
+      src="https://allen-static.oss-cn-beijing.aliyuncs.com/assets/banner.jpg?x-oss-process=image/format,webp"
+      alt=""
+    />
+    <about />
+    <slotDemo>
+      <template slot="default" slot-scope="sex, age">
+        <div>sex = {{ sex }}</div>
+        <div>age = {{ age }}</div>
+      </template>
+    </slotDemo>
     <section class="person-info">
       <div class="label">name:{{ data.name }}</div>
       <div class="label">sex:{{ data.sex }}</div>
       <div class="label">major:{{ data.major }}</div>
     </section>
+    <a href="http://localhost:3000/#/" target="_blank">click me</a>
   </div>
 </template>
 
 <script>
 import { routes } from '@/router'
 import axios from 'axios'
+import about from './components/about'
+import slotDemo from './components/slotDemo'
 
 export default {
   name: 'index',
+  components: {
+    about,
+    slotDemo
+  },
   data() {
     return {
       routes,
@@ -32,6 +51,7 @@ export default {
     }
   },
   mounted() {
+    console.log('index')
     this.fetchUrl()
     // this.mockRequest(
     //   {

@@ -1,51 +1,50 @@
 import 'element-ui/lib/theme-chalk/index.css'
+import '@zyf2e/capui-mobile/lib/index.css'
 import 'normalize.css'
 import '@/assets/reset.css'
 import Vue from 'vue'
 import ElementUI from 'element-ui'
-import Vant from 'vant'
+import CapUI from '@zyf2e/capui-mobile'
 import App from './App.vue'
-import router from '@/router'
+import createRouter from '@/router'
 
 console.log('main.js load', performance.now())
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
-// window.addEventListener('load', () => {
-//   const navigation =
-//     performance.getEntriesByType('navigation').length > 0
-//       ? performance.getEntriesByType('navigation')[0]
-//       : performance.timing
-//   console.log('load', performance.now())
-//   console.log('domInteractive', navigation.domInteractive)
-//   console.log('domContentLoadedEventStart', navigation.domContentLoadedEventStart)
-//   console.log('domComplete', navigation.domComplete)
-//   console.log('loadEventStart', navigation.loadEventStart)
-//
-//   const po = new PerformanceObserver(list => {
-//     list.getEntries().forEach(entry => {
-//       if (entry.name === 'first-contentful-paint') {
-//         console.log(entry.startTime, entry.entryType)
-//       }
-//     })
-//   })
-//
-//   po.observe({ type: 'paint', buffered: true })
-// })
-//
-// document.addEventListener('DOMContentLoaded', () => {
-//   console.log('DOMContentLoaded', performance.now())
-// })
-
 Vue.use(ElementUI)
-Vue.use(Vant)
+Vue.use(CapUI)
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+let instance = null
+let router = null
 
-// window.onload = () => {
-//   console.log('main.js load');
-// };
+if (!window.__POWERED_BY_QIANKUN__) {
+  render()
+}
+
+function render(props = {}) {
+  const { container } = props
+  router = createRouter()
+
+  instance = new Vue({
+    router,
+    render: h => h(App)
+  }).$mount(container ? container.querySelector('#app') : '#app')
+}
+
+export async function bootstrap() {
+  console.log('[vue] vue app bootstraped')
+}
+
+export async function mount(props) {
+  console.log('[vue] props from main framework', props)
+  render(props)
+}
+
+export async function unmount() {
+  instance.$destroy()
+  instance.$el.innerHTML = ''
+  instance = null
+  router = null
+}

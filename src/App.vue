@@ -7,10 +7,12 @@
 </template>
 
 <script>
+import { a } from './utils/calc'
+
 export default {
   name: 'App',
   mounted() {
-    window.wv.customContentfulPaint()
+    console.log('app', a)
   }
 }
 </script>

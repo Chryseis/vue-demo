@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --mode prod",
+    "report": "vue-cli-service build --report",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@mitojs/web": "^2.1.14",
     "@tinymce/tinymce-vue": "^3.2.2",
+    "@zyf2e/capui-mobile": "0.8.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.2",

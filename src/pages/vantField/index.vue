@@ -6,18 +6,18 @@
 
 <script>
 export default {
-  name: 'index',
+  name: 'field',
   data() {
     return {
       value: ''
-    };
+    }
   },
   methods: {
     input(value) {
-      this.value = value;
+      this.value = value
     }
   }
-};
+}
 </script>
 
 <style scoped></style>
