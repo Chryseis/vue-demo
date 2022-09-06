@@ -10,54 +10,36 @@
 </template>
 
 <script>
-const XLSX = require('xlsx');
-
-function readWorkbookFromLocalFile(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('get', url, true);
-  xhr.responseType = 'arraybuffer';
-  xhr.onload = function(e) {
-    if (xhr.status === 200) {
-      const data = new Uint8Array(xhr.response);
-      const workbook = XLSX.read(data, { type: 'array' });
-      if (callback) callback(workbook);
-    }
-  };
-  xhr.send();
-}
-
-readWorkbookFromLocalFile('/test.xlsx', workbook => workbook);
-
-let id;
+let id
 
 export default {
   name: 'index',
   mounted() {
-    this.moveContent();
+    this.moveContent()
   },
   beforeDestroy() {
-    cancelAnimationFrame(id);
+    cancelAnimationFrame(id)
   },
   methods: {
     moveContent() {
-      const wrapperEL = this.$refs.wrapper;
-      const contentEL = this.$refs.content;
+      const wrapperEL = this.$refs.wrapper
+      const contentEL = this.$refs.content
 
       const move = (deltaX = 0) => {
-        let scrollWidth = contentEL.scrollWidth;
+        let scrollWidth = contentEL.scrollWidth
         if (Math.abs(deltaX) < scrollWidth) {
-          contentEL.style = `transform:translate(${deltaX}px, 0)`;
-          id = requestAnimationFrame(() => move(deltaX - 1));
+          contentEL.style = `transform:translate(${deltaX}px, 0)`
+          id = requestAnimationFrame(() => move(deltaX - 1))
         } else {
-          contentEL.style = `transform:translate(${wrapperEL.scrollWidth}px,0)`;
-          move(wrapperEL.clientWidth);
+          contentEL.style = `transform:translate(${wrapperEL.scrollWidth}px,0)`
+          move(wrapperEL.clientWidth)
         }
-      };
+      }
 
-      return move();
+      return move()
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

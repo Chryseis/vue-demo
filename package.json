@@ -11,10 +11,11 @@
   "dependencies": {
     "@mitojs/web": "^2.1.14",
     "@tinymce/tinymce-vue": "^3.2.2",
+    "@zyf2e/capsule-ui": "^1.3.6",
     "@zyf2e/capui-mobile": "0.8.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.4",
-    "element-ui": "^2.13.2",
+    "element-ui": "^2.15.9",
     "normalize.css": "^8.0.1",
     "pdfjs-dist": "^2.4.456",
     "prettier": "^2.3.1",
