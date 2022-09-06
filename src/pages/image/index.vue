@@ -13,7 +13,7 @@
         alt=""
       />
     </div>
-    <!--    <div><img :src="imgUrl" alt="" /></div>-->
+    <div><img :src="imgUrl" alt="" /></div>
   </div>
 </template>
 

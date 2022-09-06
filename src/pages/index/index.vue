@@ -95,8 +95,9 @@ export default {
         const tcp = navigationTiming.connectEnd - navigationTiming.connectStart
         const html = navigationTiming.responseEnd - navigationTiming.requestStart
         const domParse = navigationTiming.domInteractive - navigationTiming.responseEnd
-        const fcp = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')
-          ?.startTime
+        const fcp = performance
+          .getEntriesByType('paint')
+          .find(entry => entry.name === 'first-contentful-paint')?.startTime
 
         const jsArr = resource.filter(r => /^.+\.js(?:\?.+|)$/.test(r.name))
         const cssArr = resource.filter(r => /^.+\.css(?:\?.+|)$/.test(r.name))
@@ -212,6 +213,7 @@ export default {
   .entries {
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     justify-content: center;
     margin: 0 auto 20px;
     width: 70%;
