@@ -12,7 +12,7 @@ import { a } from './utils/calc'
 export default {
   name: 'App',
   mounted() {
-    console.log('app', a)
+    console.log('## app', this)
   }
 }
 </script>

@@ -276,6 +276,9 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    console.log('## cascader', this)
   }
 }
 </script>
